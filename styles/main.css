@@ -125,6 +125,10 @@ img {
     max-width: 64rem;
 }
 
+.container.narrow {
+     max-width: 56rem;
+ }
+
 @media (min-width: 640px) {
     html { font-size: 112%; }
     
