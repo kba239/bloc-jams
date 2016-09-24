@@ -28,6 +28,21 @@ var albumMarconi = {
      ]
  };
 
+var albumRandom = {
+     title: 'This is the title',
+     artist: 'Artist Name',
+     label: 'This is a Label',
+     year: '1989',
+     albumArtUrl: 'assets/images/album_covers/10.png',
+     songs: [
+         { title: 'Hello, World', duration: '1:00' },
+         { title: 'Goodbye, World', duration: '2:01' },
+         { title: 'What is Your Name?', duration: '3:21'},
+         { title: 'Nice to Meet You', duration: '3:02' },
+         { title: 'Will We Meet Again?', duration: '4:03'}
+     ]
+ };
+
 var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -40,12 +55,13 @@ var createSongRow = function(songNumber, songName, songLength) {
      return template;
  };
 
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
 var setCurrentAlbum = function(album) {
-     var albumTitle = document.getElementsByClassName('album-view-title')[0];
-     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-     var albumImage = document.getElementsByClassName('album-cover-art')[0];
-     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
      albumTitle.firstChild.nodeValue = album.title;
      albumArtist.firstChild.nodeValue = album.artist;
      albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
@@ -58,4 +74,15 @@ var setCurrentAlbum = function(album) {
  
  window.onload = function() {
      setCurrentAlbum(albumPicasso);
+     
+     var albums = [albumPicasso, albumMarconi, albumRandom];
+     var i = 1;
+     
+     albumImage.addEventListener("click", function(event) {
+         setCurrentAlbum(albums[i]);
+         i++;
+         if (i == album.length) {
+             index = 0;
+         }
+     });
  };
