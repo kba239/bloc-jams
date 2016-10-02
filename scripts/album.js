@@ -33,7 +33,7 @@ var createSongRow = function(songNumber, songName, songLength) {
          '<tr class="album-view-song-item">'
      + '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
      + '  <td class="song-item-title">' + songName + '</td>'
-     + '  <td class="song-item-duration">' + songLength + '</td>'
+     + '  <td class="song-item-duration">' + filterTimeCode(songLength) + '</td>'
      + '</tr>'
       ;
     
@@ -129,6 +129,7 @@ var updateSeekBarWhileSongPlays = function() {
              var $seekBar = $('.seek-control .seek-bar');
  
              updateSeekPercentage($seekBar, seekBarFillRatio);
+             setCurrentTimeInPlayerBar(currentTime);
          });
      }
  };
@@ -267,7 +268,35 @@ var updatePlayerBarSong = function() {
     $(".currently-playing .artist-name").text(currentAlbum.artist);
     $(".currently-playing .artist-song-mobile").text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
     $('.main-controls .play-pause').html(playerBarPauseButton);
-}
+    $(".currently-playing" ".total-time").setTotalTimeInPlayerBar(totalTime);
+};
+
+var filterTimeCode = function(timeInSeconds) {
+    var duration = parseFloat(timeInSeconds);
+    var min = Math.floor(duration / 60);
+    var sec = Math.floor(duration - min * 60);
+    console.log(min + ":" + sec);
+};
+
+var setCurrentTimeInPlayerBar() = function(currentTime) {
+    if (currentSoundFile) {
+        currentSoundFile.bind('timeupdate', function(event) {
+            $(".current-time").text(currentTime);
+         });
+    }
+    filterTimeCode($(".current-time"));
+};
+
+var setTotalTimeInPlayerBar = function(totalTime) {
+    if (currentSoundFile) {
+        currentSoundFile.bind('timeupdate', function(event) {
+            $(".total-time").text(totalTime);
+         });
+    }
+    return filterTimeCode($(".total-time"));
+};
+
+
 
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
